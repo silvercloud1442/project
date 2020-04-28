@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Добавить проект</title>
+    <a href="../" style="text-align: center;"><h2>Main</h2></a>
+    <style>
+        * {box-sizing: border-box}
+
+.container {
+  padding: 16px;
+}
+label, h1{
+  margin: 0px 0px 0px 35%;
+}
+
+input[type=text], input[type=password], input[type=email], input[type=file] {
+  margin: 0px 0px 0px 35%;
+  align: middle;
+  width: 30%;
+  padding: 15px;
+  display: inline-block;
+  border: none;
+  background: #f1f1f1;
+}
+
+input[type=text]:focus, input[type=password], input[type=email]:focus{
+  background-color: #ddd;
+  outline: none;
+}
+
+input[type="submit"] {
+  margin: 0px 0px 0px 35%;
+  background-color: #4CAF50;
+  color: white;
+  padding: 16px 20px;
+  border: none;
+  cursor: pointer;
+  width: 30%;
+  opacity: 0.9;
+}
+
+input[type="submit"] {
+  opacity:1;
+}
+    </style>
+</head>
+<body>
+{% block content %}
+<form method="post" enctype="multipart/form-data">
+    {{ form.csrf_token }}
+    {{ form.hidden_tag() }}
+    <p>
+        {{ form.title.label }}<br>
+        {{ form.title(class="form-control") }}<br>
+        {% for error in form.title.errors %}
+            <p class="alert alert-danger" role="alert">
+                {{ error }}
+            </p>
+        {% endfor %}
+    </p>
+    <p>
+        {{ form.description.label }}<br>
+        {{ form.description(class="form-control") }}<br>
+        {% for error in form.description.errors %}
+            <p content="alert alert-danger" role="alert">
+                {{ error }}
+            </p>
+        {% endfor %}
+    </p>
+    <p>
+        <input type="file" name='images' accept="image/jpeg,image/png,">
+    </p>
+    <p>{{ form.submit(type="submit", class="btn btn-info") }}</p>
+    {{message}}
+</form>
+{% endblock %}
+</body>
+</html>

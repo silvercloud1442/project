@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <a href="../" style="text-align: center;"><h2>Main</h2></a>
+    <style>
+        * {box-sizing: border-box}
+
+.container {
+  padding: 16px;
+}
+
+input[type=checkbox]{
+    margin: 0px 0px 0px 35%;
+}
+
+
+input[type=text], input[type=password], input[type=email]{
+  margin: 0px 0px 0px 35%;
+  align: middle;
+  width: 30%;
+  padding: 15px;
+  display: inline-block;
+  border: none;
+  background: #f1f1f1;
+}
+
+input[type=text]:focus, input[type=password], input[type=email]:focus {
+  background-color: #ddd;
+  outline: none;
+}
+
+input[type="submit"] {
+  margin: 0px 0px 0px 35%;
+  background-color: #4CAF50;
+  color: white;
+  padding: 16px 20px;
+  border: none;
+  cursor: pointer;
+  width: 30%;
+  opacity: 0.9;
+}
+
+input[type="submit"] {
+  opacity:1;
+}
+    </style>
+</head>
+<body>
+    {% block content %}
+    <h1 style="margin: 0px 0px 0px 35%;">Авторизация</h1>
+    <form action="" method="post">
+        {{ form.hidden_tag() }}
+        <p>
+            {{ form.email.label(style="margin: 0px 0px 0px 35%;")}}<br>
+            {{ form.email(class="form-control", type="email") }}<br>
+            {% for error in form.email.errors %}
+                <div class="alert alert-danger" role="alert">
+                    {{ error }}
+                </div>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.password.label(style="margin: 0px 0px 0px 35%;")}}<br>
+            {{ form.password(class="form-control", type="password") }}<br>
+            {% for error in form.password.errors %}
+                <div class="alert alert-danger" role="alert">
+                    {{ error }}
+                </div>
+            {% endfor %}
+        </p>
+        <p>{{ form.remember_me() }}{{ form.remember_me.label }}</p>
+        <p>{{ form.submit(type="submit", class="btn btn-primary", default='False') }}</p>
+        <div>{{ message }}</div>
+    </form>
+{% endblock %}
+</body>
+</html>

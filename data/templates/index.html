@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Main</title>
+    <style>
+        a:link, a:visited{
+               color: #039;
+               display: inline-block;
+               text-decoration: none;
+               text-transform: uppercase;
+               letter-spacing: 1px;
+               margin: 10px 15px;
+               padding: 10px 15px;
+               font-size: 15px;
+               font-weight: bold;
+               font-family: 'Montserrat', sans-serif;
+               transition: 0.4s ease-in-out;
+                }
+        table {
+               margin: auto;
+               font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
+               font-size: 14px;
+               background: white;
+               max-width: 50%;
+               width: 50%;
+               border-collapse: collapse;
+               text-align: left;
+             }
+        th {
+               font-weight: normal;
+               color: #039;
+               border-bottom: 2px solid #6678b1;
+               padding: 10px 8px;
+             }
+        td {
+                border-bottom: 1px solid #ccc;
+                color: #669;
+                padding: 9px 8px;
+                transition: .3s linear;
+        h2{
+                width: 100%;
+                background-color: red;
+           }
+
+    </style>
+</head>
+<body>
+    {% if current_user.is_authenticated %}
+        <a href="/profile/{{current_user.id}}">{{ current_user.name }}</a>
+        <a class="navbar-brand" href="/logout" style="margin:0px 0px; padding:0px 0px; font-size: 11px;">Logout</a>
+    {% else %}
+        <p>
+            <a class="btn btn-primary " href="/register">Register</a>
+            <a class="btn btn-success" href="/login">Sign up</a>
+        </p>
+    {% endif %}
+    <h1 style="text-align: center;">Works log</h1>
+    {% if current_user.is_authenticated %}
+        <a href="jobs" class="btn btn-secondary" style="margin: 10px 7%;">Add job</a>
+    {% endif %}
+    <a href="departments" class="btn btn-secondary" style="margin: 10px 7%;"></a>
+    <table>
+        {% for job in jobs %}
+            <tr>
+                <td>
+               <div>
+                 <a style="font-size: 10px;" href="job_info/{{job.id}}"><h3 style="color: black;">{{job.title}}</h3></a>
+                 <div>
+                     <h4 style="color: gray;">{{job.brief}}</h4>
+                </div>
+               </div>
+                 </td>
+                <td><h3 style="color: green;">{{job.cost}}</h3></td>
+             </tr>
+            <tr>
+                {% if current_user.is_authenticated and current_user.id == job.customer %}
+                    <td><a href="/jobs/{{ job.id }}" class="btn btn-warning">Edit</a></td><td><a href="/jobs_delete/{{ job.id }}" class="btn btn-danger">Delete</a></td></tr>
+                {% endif %}
+            </tr>
+        {% endfor %}
+     </table>
+
+</body>
+</html>

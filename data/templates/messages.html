@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Messages</title>
+    <a href="../../../" style="text-align: center;"><h2>Main</h2></a>
+</head>
+<body>
+    {% if current_user.id == from_id or current_user.id == to_id %}
+    <table>
+        <tr>
+            {% for message in messages %}
+            {% if message.from_id == current_user.id %}
+            <div>
+                <p style="text-align: center;">{{message.text}}</p>
+            </div>
+            {% else %}
+            <div>
+                <p style="text-align: left;">{{message.text}}</p>
+            </div>
+            {% endif %}
+            {% endfor %}
+        </tr>
+
+    </table>
+  <form method="post">
+    {{ form.csrf_token }}
+    {{ form.hidden_tag() }}
+    <p>
+        {{ form.text(class="form-control") }}<br>
+        {% for error in form.text.errors %}
+            <p content="alert alert-danger" role="alert">
+                {{ error }}
+            </p>
+        {% endfor %}
+    </p>
+    <p>{{ form.submit(type="submit", class="btn btn-info") }}</p>
+    {{message}}
+  </form>
+    {% else %}
+    <h2>У вас не достаточно прав</h2>
+    {% endif %}
+</body>
+</html>

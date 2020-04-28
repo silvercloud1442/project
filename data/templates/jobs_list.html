@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Список заказов {{user.surname}} {{user.name}}</title>
+    <a href="../" style="text-align: center;"><h2>Main</h2></a>
+</head>
+<body>
+<h2>Список заказов<a href="../profile/{{user.id}}"> {{user.surname}} {{user.name}}</a></h2>
+<table>
+  {% for job in jobs %}
+  <tr>
+      <div>
+        <h2>{{job.title}}</h2>
+        {% if job.img != None %}
+             <div>
+                <img src="{{job.img}}" alt="user" style="width:10%; heigth:10%;">
+             </div>
+         {% endif %}
+         <div>
+          <h3>{{job.description}}</h3>
+         </div>
+
+      </div>
+  </tr>
+  {% endfor %}
+  </table>
+</body>
+</html>
