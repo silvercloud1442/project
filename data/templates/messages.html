@@ -14,7 +14,8 @@
             <div>
                 <p style="text-align: center;">{{message.text}}</p>
             </div>
-            {% else %}
+            {% endif %}
+            {% if message.from_id == to_id %}
             <div>
                 <p style="text-align: left;">{{message.text}}</p>
             </div>
@@ -27,13 +28,12 @@
     {{ form.csrf_token }}
     {{ form.hidden_tag() }}
     <p>
-        {{ form.text(class="form-control") }}<br>
-        {% for error in form.text.errors %}
-            <p content="alert alert-danger" role="alert">
-                {{ error }}
-            </p>
-        {% endfor %}
-    </p>
+            {{ form.text.label }}<br>
+            {{ form.text(cols=50, rows=4) }}<br>
+            {% for error in form.text.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
     <p>{{ form.submit(type="submit", class="btn btn-info") }}</p>
     {{message}}
   </form>

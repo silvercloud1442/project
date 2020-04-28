@@ -2,7 +2,7 @@ import os
 from sqlalchemy import or_
 from pathlib import Path
 from flask import Flask, render_template, request
-from flask_login import LoginManager, login_user, logout_user, login_required, current_user
+from flask_login import LoginManager, login_user, logout_user, current_user
 from flask_restful import Api
 from flask_ngrok import run_with_ngrok
 from werkzeug.utils import redirect, secure_filename
@@ -24,17 +24,25 @@ SECRET_KEY = os.urandom(32)
 app.config['SECRET_KEY'] = SECRET_KEY
 login_manager = LoginManager()
 login_manager.init_app(app)
+# run_with_ngrok(app)
 global_init('db/dbase.sqlite')
 
 
 @app.route('/')
-@app.route('/index')
+@app.route('/index', methods=['GET'])
 def index():
     session = create_session()
-    jobs_list = []
-    for jobs in session.query(Jobs).all():
-        jobs_list.append(jobs)
-    return render_template('index.html', jobs=jobs_list)
+    category = request.args.get('cat')
+    if category == None:
+        jobs_list = []
+        for jobs in session.query(Jobs).all():
+            jobs_list.append(jobs)
+        return render_template('index.html', jobs=jobs_list)
+    else:
+        jobs_list = []
+        for jobs in session.query(Jobs).filter(Jobs.category == category).all():
+            jobs_list.append(jobs)
+        return render_template('index.html', jobs=jobs_list)
 
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -104,6 +112,7 @@ def add_job():
         job.cost = form.cost.data
         job.description = form.description.data
         job.brief = ''.join(form.description.data[:30] + '...')
+        job.category = form.category.data
         UPLOAD_DIR: Path = Path(__file__).parent / 'static/jobs_img'
         UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
         for upload in request.files.getlist('images'):
@@ -145,6 +154,14 @@ def edit_jobs(id):
             job.title = form.title.data
             job.cost = form.cost.data
             job.description = form.description.data
+            UPLOAD_DIR: Path = Path(__file__).parent / 'static/jobs_img'
+            UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
+            for upload in request.files.getlist('images'):
+                filename = secure_filename(upload.filename)
+                if filename != '':
+                    save_path = str(UPLOAD_DIR / filename)
+                    upload.save(save_path)
+                    job.img = '\\static' + save_path.split("\\static")[1]
             session.add(job)
             session.commit()
             return redirect('/')
@@ -162,6 +179,18 @@ def jobs_delete(id):
         session.delete(job)
         session.commit()
     return redirect('/')
+
+@app.route('/jobs_delete2/<int:id>', methods=['GET', 'POST'])
+def jobs_delete2(id):
+    session = create_session()
+    if current_user.id == 1:
+        job = session.query(Jobs).filter(Jobs.id == id).first()
+    else:
+        job = session.query(Jobs).filter(Jobs.id == id, Jobs.user == current_user).first()
+    if job:
+        session.delete(job)
+        session.commit()
+    return redirect('/jobs_list/{}'.format(current_user.id))
 
 
 @app.route('/profile/<int:id>', methods=['GET'])
@@ -253,7 +282,6 @@ def messages():
     session = create_session()
     from_id = int(request.args.get('from_id'))
     to_id = int(request.args.get('to_id'))
-    print(from_id, to_id)
     if current_user.id == from_id:
         if form.validate_on_submit():
             message = Message()
@@ -263,14 +291,10 @@ def messages():
             session.add(message)
             session.commit()
             return redirect('/messages/?from_id={}&to_id={}'.format(from_id, to_id))
-        # f1 = (Message.from_id == from_id and Message.to_id == to_id)
-        # messages = session.query(Message).filter(f1).all()
-        messages = session.query(Message).all()
-        messages2 = []
-        for message in messages:
-            if message.from_id == from_id and message.to_id == to_id:
-                messages2.append(message)
-        return render_template('messages.html', messages=messages2, from_id=from_id, to_id=to_id, form=form)
+        f1 = (Message.from_id == from_id and Message.to_id == to_id)
+        f2 = (Message.to_id == from_id and Message.from_id == to_id)
+        messages = session.query(Message).filter(or_(f1, f2)).all()
+        return render_template('messages.html', messages=messages, from_id=from_id, to_id=to_id, form=form)
     else:
         return render_template('error.html')
 

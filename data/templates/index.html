@@ -38,6 +38,7 @@
                 color: #669;
                 padding: 9px 8px;
                 transition: .3s linear;
+                }
         h2{
                 width: 100%;
                 background-color: red;
@@ -59,6 +60,12 @@
     {% if current_user.is_authenticated %}
         <a href="jobs" class="btn btn-secondary" style="margin: 10px 7%;">Add job</a>
     {% endif %}
+    <table>
+        <tr>
+            <td><a  href="/index">Все</a></td><td><a href="/index?cat=prog">Программирование</a></td><td><a href="/index?cat=des">Дизайн</a></td><td><a href="/index?cat=av">Аудио/видео</a></td><td><a href="/index?cat=mrk">Маркетинг</a></td><td><a href="/index?cat=tw">Работа с текстом</a></td>
+        </tr>
+
+    </table>
     <a href="departments" class="btn btn-secondary" style="margin: 10px 7%;"></a>
     <table>
         {% for job in jobs %}

@@ -13,8 +13,8 @@
 {% endif %}
 {% if current_user.id != user.id %}
 <p><a href="/messages?from_id={{current_user.id}}&to_id={{user.id}}">Написать сообщение</a></p>
-<p><a href="/jobs_list/{{user.id}}">Заказы</a></p>
 {% endif %}
+<p><a href="/jobs_list/{{user.id}}">Заказы</a></p>
 <h3>Проекты</h3>
 {% if current_user.id == user.id %}
 <a href="/project/{{user.id}}">Добавить проект</a>

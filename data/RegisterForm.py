@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField
+from wtforms import StringField, SubmitField, TextAreaField
 from wtforms.fields.html5 import EmailField
-from wtforms.validators import DataRequired
+from wtforms.validators import DataRequired, Length
 
 
 class RegisterForm(FlaskForm):
@@ -11,6 +11,6 @@ class RegisterForm(FlaskForm):
     name = StringField('Имя', validators=[DataRequired()])
     surname = StringField('Фамилия', validators=[DataRequired()])
     age = StringField('Возраст', validators=[DataRequired()])
-    description = StringField('Обо мне:')
+    description = TextAreaField('Описание', validators=[Length(min=0, max=140)])
 
     submit = SubmitField('Продолжить')

@@ -14,7 +14,7 @@ label, h1{
   margin: 0px 0px 0px 35%;
 }
 
-input[type=text], input[type=password], input[type=email], input[type=file] {
+input[type=text], input[type=password], input[type=email], input[type=file], textarea {
   margin: 0px 0px 0px 35%;
   align: middle;
   width: 30%;
@@ -24,7 +24,7 @@ input[type=text], input[type=password], input[type=email], input[type=file] {
   background: #f1f1f1;
 }
 
-input[type=text]:focus, input[type=password], input[type=email]:focus {
+input[type=text]:focus, input[type=password]:focus, input[type=email]:focus, textarea:focus {
   background-color: #ddd;
   outline: none;
 }
@@ -60,14 +60,12 @@ input[type="submit"] {
         {% endfor %}
     </p>
     <p>
-        {{ form.description.label }}<br>
-        {{ form.description(class="form-control") }}<br>
-        {% for error in form.description.errors %}
-            <p content="alert alert-danger" role="alert">
-                {{ error }}
-            </p>
-        {% endfor %}
-    </p>
+            {{ form.description.label }}<br>
+            {{ form.description(cols=50, rows=4) }}<br>
+            {% for error in form.description.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
     <p>
         {{ form.cost.label }}<br>
         {{ form.cost(class="form-control") }}<br>
@@ -77,6 +75,14 @@ input[type="submit"] {
             </p>
         {% endfor %}
     </p>
+    <p>
+        {{ form.category.label }}<br>
+        {{ form.category(class="form-control") }}<br>
+        {% for error in form.category.errors %}
+            <p content="alert alert-danger" role="alert">
+                {{ error }}
+            </p>
+        {% endfor %}
     <p>
         <input type="file" name='images' accept="image/jpeg,image/png">
     </p>

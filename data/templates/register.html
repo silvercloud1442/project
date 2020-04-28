@@ -106,9 +106,12 @@ input[type="submit"] {
         {% endfor %}
     </p>
     <p>
-        {{ form.description.label }}<br>
-        {{ form.description(class="form-control") }}<br>
-    </p>
+            {{ form.description.label }}<br>
+            {{ form.description(cols=50, rows=4) }}<br>
+            {% for error in form.description.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
     <p>{{ form.submit(type="submit", class="btn btn-primary") }}</p>
     {{message}}
 </form>

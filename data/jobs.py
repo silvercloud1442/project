@@ -15,6 +15,7 @@ class Jobs(SqlAlchemyBase, SerializerMixin):
     description = sqlalchemy.Column(sqlalchemy.String)
     brief = sqlalchemy.Column(sqlalchemy.String)
     cost = sqlalchemy.Column(sqlalchemy.Integer)
+    category = sqlalchemy.Column(sqlalchemy.String)
     img = sqlalchemy.Column(sqlalchemy.String, default=None)
 
     user = orm.relation('User')
