@@ -6,7 +6,6 @@
   </head>
 <body>
 <h2>{{user.name}} {{user.surname}}</h2>
-<h6>На сайте с {{user.created_date}}</h6>
 <img src="{{user.img}}" alt="user" class="img-circle img-responsive" style="width:5%; heigth:5%;">
 {% if user.description != '' %}
 <p><strong>Обо мне: </strong>{{user.description}}</p>
@@ -30,8 +29,8 @@
         <div>
           <h4>{{project.description}}</h4>
        </div>
-        <a href="/project/{{project.id}}">Изменить</a>
-        <a href="/project/{{project.id}}">Удалить</a>
+        <a href="/project_edit/{{project.id}}">Изменить</a>
+        <a href="/project_delete/{{project.id}}">Удалить</a>
       </div>
     {% endfor %}
   </tr>

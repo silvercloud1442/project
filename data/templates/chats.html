@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Сообщения</title>
+</head>
+<body>
+<table>
+    {% for message in messages %}
+    <tr>
+                <td>
+               <div>
+                 <a style="font-size: 10px;" href="../messages?from_id={{current_user.id}}&to_id={{message[2]}}"><h3 style="color: black;">{{message[0]}}</h3></a>
+                 <div>
+                     <h4 style="color: gray;">{{message[1]}}</h4>
+                </div>
+               </div>
+                 </td>
+             </tr>
+    {% endfor %}
+</table>
+
+</body>
+</html>

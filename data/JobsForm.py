@@ -9,5 +9,7 @@ class JobsForm(FlaskForm):
     category = SelectField("Категория", choices=[("prog", "Программирование"), ("des", "Дизайн"), ("av", "аудио/видео"),
                                                  ("mrk", "Маркетинг"), ("tw", "Работа с текстом")],
                            validators=[DataRequired()])
+    category_2 = SelectField("Дополнительная категория", choices=[('None', 'Нет'), ("prog", "Программирование"), ("des", "Дизайн"), ("av", "аудио/видео"),
+                                                 ("mrk", "Маркетинг"), ("tw", "Работа с текстом")])
     cost = IntegerField("Цена", validators=[DataRequired()])
     submit = SubmitField("Продолжить")

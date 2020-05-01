@@ -12,19 +12,23 @@
 }
 label, h1{
   margin: 0px 0px 0px 35%;
-}
 
-input[type=text], input[type=password], input[type=email], input[type=date] {
+}
+input[type=checkbox]{
+  margin: 0px 0px 0px 35%;
+  padding: 15px;
+  color: #dcdcdc;
+}
+input[type=text], input[type=password], input[type=email], input[type=date], textarea{
   margin: 0px 0px 0px 35%;
   align: middle;
   width: 30%;
   padding: 15px;
   display: inline-block;
-  border: none;
-  background: #f1f1f1;
+  background: #dcdcdc;
 }
 
-input[type=text]:focus, input[type=password], input[type=email]:focus, , input[type=date]:focus {
+input[type=text]:focus, input[type=password], input[type=email]:focus, , input[type=date]:focus, textarea:focus {
   background-color: #ddd;
   outline: none;
 }
@@ -112,6 +116,15 @@ input[type="submit"] {
             <span style="color: red;">[{{ error }}]</span>
             {% endfor %}
         </p>
+    <p>
+        {{ form.worker.label }}<br>
+            {{ form.worker(class="custom-checkbox") }}<br>
+            {% for error in form.worker.errors %}
+            <span>Indigo</span>
+            {% endfor %}
+        </p>
+
+    </p>
     <p>{{ form.submit(type="submit", class="btn btn-primary") }}</p>
     {{message}}
 </form>

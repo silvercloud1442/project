@@ -18,6 +18,7 @@ class User(SqlAlchemyBase, UserMixin, SerializerMixin):
     description = sqlalchemy.Column(sqlalchemy.String)
     rating = sqlalchemy.Column(sqlalchemy.Integer, default=0)
     works = sqlalchemy.Column(sqlalchemy.Integer, default=0)
+    worker = sqlalchemy.Column(sqlalchemy.Boolean, default=False)
     created_date = sqlalchemy.Column(sqlalchemy.DateTime,
                                      default=datetime.datetime.now)
     img = sqlalchemy.Column(sqlalchemy.String, default='/static/img/guest_img.jpg')

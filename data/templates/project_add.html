@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Job</title>
+    <title>Добавить проект</title>
     <a href="../" style="text-align: center;"><h2>Main</h2></a>
     <style>
         * {box-sizing: border-box}
@@ -14,7 +14,7 @@ label, h1{
   margin: 0px 0px 0px 35%;
 }
 
-input[type=text], input[type=password], input[type=email], input[type=file], textarea, select {
+input[type=text], input[type=password], input[type=email], input[type=file], textarea {
   margin: 0px 0px 0px 35%;
   align: middle;
   width: 30%;
@@ -24,7 +24,7 @@ input[type=text], input[type=password], input[type=email], input[type=file], tex
   background: #f1f1f1;
 }
 
-input[type=text]:focus, input[type=password]:focus, input[type=email]:focus, textarea:focus, select:focus {
+input[type=text]:focus, input[type=password], input[type=email]:focus, textarea:focus{
   background-color: #ddd;
   outline: none;
 }
@@ -48,8 +48,8 @@ input[type="submit"] {
 <body>
 {% block content %}
 <form method="post" enctype="multipart/form-data">
-    {{ form.hidden_tag() }}
     {{ form.csrf_token }}
+    {{ form.hidden_tag() }}
     <p>
         {{ form.title.label }}<br>
         {{ form.title(class="form-control") }}<br>
@@ -67,33 +67,7 @@ input[type="submit"] {
             {% endfor %}
         </p>
     <p>
-        {{ form.cost.label }}<br>
-        {{ form.cost(class="form-control") }}<br>
-        {% for error in form.cost.errors %}
-            <p content="alert alert-danger" role="alert">
-                {{ error }}
-            </p>
-        {% endfor %}
-    </p>
-    <p>
-        {{ form.category.label }}<br>
-        {{ form.category(class="form-control") }}<br>
-        {% for error in form.category.errors %}
-            <p content="alert alert-danger" role="alert">
-                {{ error }}
-            </p>
-        {% endfor %}
-    <p>
-    <p>
-        {{ form.category_2.label }}<br>
-        {{ form.category_2(class="form-control") }}<br>
-        {% for error in form.category_2.errors %}
-            <p content="alert alert-danger" role="alert">
-                {{ error }}
-            </p>
-        {% endfor %}
-    <p>
-        <input type="file" name='images' accept="image/jpeg,image/png">
+        <input type="file" name='images' accept="image/jpeg,image/png,">
     </p>
     <p>{{ form.submit(type="submit", class="btn btn-info") }}</p>
     {{message}}
